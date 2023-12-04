@@ -2,6 +2,8 @@ import { useState } from "react";
 import { useEffect } from "react";
 
 function User({ user, selected, setSelected, setAllUsers }) {
+  const [editActive, setEditActive] = useState(false);
+
   function selection() {
     if (selected.some((obj) => obj.id === user.id)) {
       setSelected((selected) => selected.filter((obj) => obj.id !== user.id));
@@ -9,6 +11,10 @@ function User({ user, selected, setSelected, setAllUsers }) {
       const selectionEntry = [...selected, user];
       setSelected(selectionEntry);
     }
+  }
+
+  function editing() {
+    setEditActive((editActive) => !editActive);
   }
 
   function deletion() {
@@ -31,10 +37,52 @@ function User({ user, selected, setSelected, setAllUsers }) {
             }`}
           ></button>
         </td>
-        <td>{user.name}</td>
-        <td>{user.email}</td>
-        <td>{user.role}</td>
-        <td>
+
+        {editActive ? (
+          <td>
+            <input
+              className="nameEditBox"
+              type="text"
+              placeholder={user.name}
+              onChange={(e) => (user.name = e.target.value)}
+            />
+          </td>
+        ) : (
+          <td>{user.name}</td>
+        )}
+
+        {editActive ? (
+          <td>
+            <input
+              className="emailEditBox"
+              type="text"
+              placeholder={user.email}
+              onChange={(e) => (user.email = e.target.value)}
+            />
+          </td>
+        ) : (
+          <td>{user.email}</td>
+        )}
+
+        {editActive ? (
+          <td>
+            <input
+              className="roleEditBox"
+              type="text"
+              placeholder={user.role}
+              onChange={(e) => (user.role = e.target.value)}
+            />
+          </td>
+        ) : (
+          <td>{user.role}</td>
+        )}
+
+        <td style={{ borderLeft: "1px solid lightgrey" }}>
+          <button className="editButton" onClick={editing}>
+            {editActive ? "✔" : "🖊️"}
+          </button>
+        </td>
+        <td style={{ borderLeft: "1px solid lightgrey" }}>
           <button className="deleteButton" onClick={deletion}>
             ❌
           </button>
@@ -163,7 +211,9 @@ export default function App() {
             <td>Name</td>
             <td>Email</td>
             <td>Role</td>
-            <td>Action</td>
+            <td colSpan="2" style={{ borderLeft: "1px solid lightgrey" }}>
+              Action
+            </td>
           </tr>
         </thead>
         {searchedUsers.length !== 0 &&
