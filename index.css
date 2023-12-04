@@ -113,13 +113,28 @@ button {
   cursor: pointer;
 }
 
-.deleteButton {
+.deleteButton,
+.editButton {
   border: none;
   background-color: rgb(244, 247, 250);
-  margin-left: 10px;
   border-radius: 5px;
 }
 
 .deleteButton:hover {
   background-color: black;
+}
+
+.nameEditBox {
+  height: 1.2rem;
+  width: 6rem;
+}
+
+.emailEditBox {
+  height: 1.2rem;
+  width: 10rem;
+}
+
+.roleEditBox {
+  height: 1.2rem;
+  width: 4.5rem;
 }
